@@ -1,0 +1,24 @@
+:root {
+    font-size: 2vmin;
+}
+
+#mensajes {
+    width: 95vw;
+    max-width: 5in;
+    height: 50vh;
+    overflow-y: scroll;
+    border-radius: 1rem;
+    border: solid thin lightgrey;
+    box-shadow: 0px 0px 20px lightcyan inset;
+}
+
+.mensaje {
+    margin: 2rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: solid thin #eee;
+}
+
+form {
+    margin-top: 1rem;
+}

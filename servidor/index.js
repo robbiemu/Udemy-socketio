@@ -21,6 +21,12 @@ io.on('connection', function (socket) {
     console.log(`El cliente con ip ${socket.handshake.address} se ha contectado`)
 
     socket.emit('mensajes', mensajes)
+
+    socket.on('añadirMensaje', function(txr) {
+        mensajes.push(txr)
+        io.sockets.emit('mensajes', mensajes)        
+    })
+
 })
 
 servidor.listen(6677, function(){

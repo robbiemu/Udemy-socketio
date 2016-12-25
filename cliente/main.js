@@ -4,19 +4,33 @@ const PORT = '6677'
 const socket = io.connect(`${IP}:${PORT}`, {forceNew:true})
 
 class ViewModel {
-    constructor(){
+    constructor(socket){
         this.mensajes = []
+        this.socket = socket
     }
     render(){
-        let html = this.mensajes.map((m, i) => `<div class="mensaje">
+        let htmlMensajes = this.mensajes.map((m, i) => `<div class="mensaje">
             <strong class="nickname">${m.nickname}</strong>
             <p class="text">${m.text}</p>
         </div>`).join("\n")
 
-        document.getElementById('mensajes').innerHTML = html
+        let eleMensajes = document.getElementById('mensajes');
+        eleMensajes.innerHTML = htmlMensajes
+        eleMensajes.scrollTop = eleMensajes.scrollHeight // parece que no funciona en edge, pero chrome si
+    }
+    enviarMensaje(ele) {
+        let mensaje = {
+            nickname: document.getElementById('nickname').value,
+            text:  document.getElementById('text').value
+        }
+         document.getElementById('nickname').style.display = 'none'
+         document.getElementById('text').value= ''
+
+         this.socket.emit('añadirMensaje', mensaje)
+         return false
     }
 }
-const vm = new ViewModel
+const vm = new ViewModel(socket)
 
 socket.on('mensajes', function (txr) {
     //console.dir(txr)
